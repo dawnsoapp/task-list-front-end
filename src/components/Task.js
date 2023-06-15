@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './Task.css';
 
 const Task = ({ id, title, isComplete }) => {
-  const buttonClass = isComplete ? 'tasks__item__toggle--completed' : '';
+  const [complete, setComplete] = useState(isComplete);
+  const buttonClass = complete ? 'tasks__item__toggle--completed' : '';
+
   return (
     <li className="tasks__item">
-      <button className={`tasks__item__toggle ${buttonClass}`}>{title}</button>
+      <button
+        className={`tasks__item__toggle ${buttonClass}`}
+        onClick={() => setComplete(!complete)}
+      >
+        {title}
+      </button>
       <button className="tasks__item__remove button">x</button>
     </li>
   );
@@ -20,6 +27,7 @@ Task.propTypes = {
 };
 
 export default Task;
+<<<<<<< HEAD
 
 // 1.What props does Task have? Where do they come from?
 // id, title, isComplete.
@@ -53,3 +61,5 @@ export default Task;
 
 // What element is the component wrapped in?
 {/* <div> element</div> */}
+=======
+>>>>>>> a3ab47b627003cc0fc1817da8c79dd555749d405
