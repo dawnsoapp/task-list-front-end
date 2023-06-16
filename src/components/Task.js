@@ -6,6 +6,7 @@ import './Task.css';
 const Task = (props) => {
   // const [complete, setComplete] = useState(isComplete);
   const buttonClass = props.isComplete ? 'tasks__item__toggle--completed' : '';
+  // const deleteButtonClass = !props.id  ? 'tasks__item__remove--button' : '';
 
   return (
     <li className="tasks__item">
@@ -14,16 +15,35 @@ const Task = (props) => {
         onClick={() => props.onTaskUpdate(props.id)}>
         {props.title}
       </button>
-      <button className="tasks__item__remove button">x</button>
+      <button className="tasks__item__remove button"
+        onClick={() => props.onTaskDelete(props.id)}>
+          x
+      </button>
     </li>
   );
 };
+
+// return (
+//   <li className="tasks__item">
+//     <button
+//       className={`tasks__item__toggle ${buttonClass}`}
+//       onClick={() => props.onTaskUpdate(props.id)}>
+//       {props.title}
+//     </button>
+//     <button className={`tasks__item__remove--button ${deleteButtonClass}`}
+//     onClick={() => props.onTaskDelete(props.id)}>
+//       x
+//       </button>
+//   </li>
+// );
+// };
 
 Task.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   isComplete: PropTypes.bool.isRequired,
-  onTaskUpdate: PropTypes.func.isRequired
+  onTaskUpdate: PropTypes.func.isRequired,
+  onTaskDelete: PropTypes.func.isRequired
 };
 
 export default Task;
