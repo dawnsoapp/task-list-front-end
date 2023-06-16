@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Task.css';
 
 const Task = (props) => {
-  const [complete, setComplete] = useState(isComplete);
+  // const [complete, setComplete] = useState(isComplete);
   const buttonClass = props.isComplete ? 'tasks__item__toggle--completed' : '';
   // const deleteButtonClass = !props.id  ? 'tasks__item__remove--button' : '';
 
@@ -23,21 +23,6 @@ const Task = (props) => {
     </li>
   ); 
 };
-
-// return (
-//   <li className="tasks__item">
-//     <button
-//       className={`tasks__item__toggle ${buttonClass}`}
-//       onClick={() => props.onTaskUpdate(props.id)}>
-//       {props.title}
-//     </button>
-//     <button className={`tasks__item__remove--button ${deleteButtonClass}`}
-//     onClick={() => props.onTaskDelete(props.id)}>
-//       x
-//       </button>
-//   </li>
-// );
-// };
 
 Task.propTypes = {
   id: PropTypes.number.isRequired,
