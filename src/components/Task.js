@@ -11,8 +11,7 @@ const Task = (props) => {
     <li className="tasks__item">
       <button
         className={`tasks__item__toggle ${buttonClass}`}
-        onClick={() => props.onTaskUpdate(props.id)}
-      >
+        onClick={() => props.onTaskUpdate(props.id)}>
         {props.title}
       </button>
       <button className="tasks__item__remove button">x</button>
@@ -24,7 +23,7 @@ Task.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   isComplete: PropTypes.bool.isRequired,
-  onTaskUpdate: PropTypes.func.isRequired,
+  onTaskUpdate: PropTypes.func.isRequired
 };
 
 export default Task;
