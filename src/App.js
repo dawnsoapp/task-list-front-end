@@ -20,6 +20,7 @@ const App = () => {
   const [taskData, setTaskData] = useState(TASKS);
 
   const onTaskUpdate = (id) => {
+    console.log('Are you there?');
     setTaskData(() => taskData.map((task) => {
       if(task.id === id) {
         return {...task, isComplete: !task.isComplete};
