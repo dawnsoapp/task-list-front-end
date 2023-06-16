@@ -27,7 +27,7 @@ Task.propTypes = {
 };
 
 export default Task;
-<<<<<<< HEAD
+// <<<<<<< HEAD
 
 // 1.What props does Task have? Where do they come from?
 // id, title, isComplete.
@@ -61,5 +61,3 @@ export default Task;
 
 // What element is the component wrapped in?
 {/* <div> element</div> */}
-=======
->>>>>>> a3ab47b627003cc0fc1817da8c79dd555749d405
