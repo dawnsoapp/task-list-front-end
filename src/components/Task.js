@@ -32,6 +32,11 @@ Task.propTypes = {
   onTaskDelete: PropTypes.func.isRequired
 };
 
+
+// If we choose to make Helper Functions:
+// onTaskAPIPatch(?)
+// onTaskAPIDelete(?)
+
 export default Task;
 // <<<<<<< HEAD
 
