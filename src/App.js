@@ -20,9 +20,12 @@ const TASKS = [
 //make state to hold API call: useState(TASKS) --> useState(API_URL)
 //2nd state for error handling: const [errorMsg, setErrorMsg] 
 //axios.patch for updating + axios.delete for removing + .catch for error
-//axios.patch(taskData, /tasks/, `${props.id}(?)` OR key of update=isComplete)
+//axios.patch(taskData + `/tasks/${props.id}`) OR key of update=isComplete)
 //.then(response) => setTaskData 30-36 OR setTaskData(onTaskUpdate)
 //.catch(error) => setErrorMsg
+//WE'RE DOING THE OPPOSITE : The GET is the inverse ->
+//GET makes it so the UI changes based on the API BUT
+//PATCH needs to make the API change based on the UI
 
 const App = () => {
   const [taskData, setTaskData] = useState(TASKS);
