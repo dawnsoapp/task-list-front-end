@@ -1,48 +1,75 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import TaskList from './components/TaskList.js';
 import './App.css';
 
-const TASKS = [
+// const TASKS = [
 
-  {
-    id: 1,
-    title: 'Mow the lawn',
-    isComplete: false,
-  },
-  {
-    id: 2,
-    title: 'Cook Pasta',
-    isComplete: true,
-  },
-];
+//   {
+//     id: 1,
+//     title: 'Mow the lawn',
+//     isComplete: false,
+//   },
+//   {
+//     id: 2,
+//     title: 'Cook Pasta',
+//     isComplete: true,
+//   },
+// ];
 
 //make state to hold API call: useState(TASKS) --> useState(API_URL)
 //2nd state for error handling: const [errorMsg, setErrorMsg] 
 //axios.patch for updating + axios.delete for removing + .catch for error
-//axios.patch(taskData + `/tasks/${props.id}`) OR key of update=isComplete)
+//axios.patch(taskData + `/tasks/${props.id}`)
 //.then(response) => setTaskData 30-36 OR setTaskData(onTaskUpdate)
 //.catch(error) => setErrorMsg
 //WE'RE DOING THE OPPOSITE : The GET is the inverse ->
 //GET makes it so the UI changes based on the API BUT
 //PATCH needs to make the API change based on the UI
 
+const URL = 'https://task-list-api-c17.onrender.com/tasks';
+
+const taskUpdate = (id, markComplete) => {
+  const endPoint = markComplete ? 'mark_complete' : 'mark_incomplete';
+  return axios.patch(`${URL}/${id}/${endPoint}`)
+  .then((response) => {
+    return (response.data);
+  });
+};
+
 const App = () => {
-  const [taskData, setTaskData] = useState(TASKS);
+  const [taskData, setTaskData] = useState([]);
+
+  useEffect(() => {
+    getURL();
+  });
+
+  const getURL = () => {
+    return axios.get(URL)
+    .then((response) => {
+      setTaskData(response.data);
+    });
+  };
 
   const onTaskUpdate = (id) => {
-    setTaskData(() => taskData.map((task) => {
-      if(task.id === id) {
-        return {...task, isComplete: !task.isComplete};
-      } else {
+    const task = taskData.find(task => task.id === id);
+    if (!task) {
+      return Promise.resolve();
+    }
+    return taskUpdate(id, !task.isComplete)
+    .then((newTask) => {
+      setTaskData(taskData.map(task => {
+        if (task.id === newTask.id){
+          return newTask;
+        }
         return task;
-      }
-    }));
+      }));
+    });
   };
 
   const onTaskDelete = (id) => {
     setTaskData(() => taskData.filter((task) => {
-      return task.id !== id;
+    return task.id !== id;
     }));
   };
 
@@ -60,6 +87,7 @@ const App = () => {
 };
 
 export default App;
+
 
 
 //Questions:
