@@ -29,11 +29,44 @@ import './App.css';
 
 const URL = 'https://task-list-api-c17.onrender.com/tasks';
 
+//convert python to json
+const taskApiToJson = task => {
+  const { description, id, is_complete: isComplete, title } = task;
+
+  return { description, id, isComplete, title };
+};
+
+//get request 
+const getURL = () => {
+  return axios.get(URL)
+  .then((response) => {
+    return response.data.map(taskApiToJson);
+  })
+  .catch(err => {
+    console.log(err);
+    throw new Error('error fetching tasks');
+  });
+};
+
+//patch request
 const taskUpdate = (id, markComplete) => {
   const endPoint = markComplete ? 'mark_complete' : 'mark_incomplete';
   return axios.patch(`${URL}/${id}/${endPoint}`)
-  .then((response) => {
-    return (response.data);
+  .then(response => {
+    return taskApiToJson(response.data.task);
+  })
+  .catch(err => {
+    console.log(err);
+    throw new Error(`error updating task ${id}`);
+});
+};
+
+//delete request
+const taskDelete = id => {
+  return axios.delete(`${URL}/${id}`)
+  .catch(err => {
+    console.log(err);
+    throw new Error(`error deleting task ${id}`);
   });
 };
 
@@ -41,13 +74,16 @@ const App = () => {
   const [taskData, setTaskData] = useState([]);
 
   useEffect(() => {
-    getURL();
+    refreshTasks();
   });
 
-  const getURL = () => {
-    return axios.get(URL)
-    .then((response) => {
-      setTaskData(response.data);
+  const refreshTasks = () => {
+    return getURL()
+    .then((tasks) => {
+      setTaskData(tasks);
+    })
+    .catch(err => {
+      console.log(err.message);
     });
   };
 
@@ -68,11 +104,16 @@ const App = () => {
   };
 
   const onTaskDelete = (id) => {
-    setTaskData(() => taskData.filter((task) => {
-    return task.id !== id;
-    }));
+    return taskDelete(id)
+    .then(() => {
+      setTaskData(oldTasks => {
+        return oldTasks.filter(task => task.id !== id);
+      });
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
   };
-
 
   return (
     <div className="App">
